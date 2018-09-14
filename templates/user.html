@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Add user</h1>
+<form method="POST" action="/admin/user/">
+    email: <input type="text" name="email">
+    <input type="submit" value="Add user">
+</form>
+
+<h1>Users</h1>
+<table>
+	<tr>
+		<th>user.id</th>
+		<th>user.email</th>
+		<th></th>
+		<th></th>
+	</tr>
+	{% for user in users %}
+	<tr>
+		<td>{{user.id}}</td>
+		<td>{{user.email}}</td>
+		<td>
+			<form method="POST" action="./update">
+				<input type="hidden" value="{{user.email}}" name="oldemail">
+				<input type="text" value="{{user.email}}" name="newemail">
+				<input type="submit" value="Update user">
+			</form>
+		</td>
+		<td>
+			<form method="POST" action="./delete">
+				<input type="hidden" value="{{user.email}}" name="email">
+				<input type="submit" value="Delete user">
+			</form>
+		</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

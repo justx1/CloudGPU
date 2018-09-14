@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Add CpuType</h1>
+<form method="POST" action="/admin/cputype/">
+    name: <input type="text" name="name">
+    <input type="submit" value="Add CpuType">
+</form>
+
+<h1>List of CpuTypes</h1>
+<table>
+	<tr>
+		<th>cpu_type.id</th>
+		<th>cpu_type.name</th>
+		<th></th>
+		<th></th>
+	</tr>
+	{% for cpu_type in cpu_types %}
+	<tr>
+		<td>{{cpu_type.id}}</td>
+		<td>{{cpu_type.name}}</td>
+		<td>
+			<form method="POST" action="./update">
+				<input type="hidden" value="{{cpu_type.name}}" name="old.name">
+				<input type="text" value="{{cpu_type.name}}" name="new.name">
+				<input type="submit" value="Update name">
+			</form>
+		</td>
+		<td>
+			<form method="POST" action="./delete">
+				<input type="hidden" value="{{cpu_type.id}}" name="id">
+				<input type="submit" value="Delete CpuType">
+			</form>
+		</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

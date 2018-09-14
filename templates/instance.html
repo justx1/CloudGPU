@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Add Instance</h1>
+<form method="POST" action="/">
+    user_id: <input type="text" name="user_id">
+    image_type_id: <input type="text" name="image_type_id">
+    gpu_request_type: <input type="text" name="gpu_request_type_id">
+    gpu_request_count: <input type="text" name="gpu_request_count">        
+    <input type="submit" value="Add Instance">
+</form>
+
+<h1>List of Instances</h1>
+<table>
+	<tr>
+		<th>instance.id</th>
+		<th>instance.user_id</th>
+		<th>instance.user.email</th>
+		<th>instance.image_type_id</th>
+		<th>instance.image_type.name</th>
+		<th></th>
+	</tr>
+	{% for instance in instances %}
+	<tr>
+		<td>{{instance.id}}</td>
+		<td>{{instance.user_id}}</td>
+		<td>{{instance.user.email}}</td>
+		<td>{{instance.image_type_id}}</td>
+		<td>{{instance.image_type.name}}</td>
+		<td>
+			<form method="POST" action="./delete">
+				<input type="hidden" value="{{instance.id}}" name="id">
+				<input type="submit" value="Delete Instance">
+			</form>
+		</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

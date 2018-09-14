@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Add Gpu</h1>
+<form method="POST" action="/admin/gpu/">
+    host_id: <input type="text" name="host_id">
+    gpu_type_id: <input type="text" name="gpu_type_id">
+    instance_id: <input type="text" name="instance_id">        
+    <input type="submit" value="Add Gpu">
+</form>
+
+<h1>List of Gpus</h1>
+<table>
+	<tr>
+		<th>gpu.id</th>
+		<th>gpu.host_id</th>
+		<th>gpu.gpu_type_id</th>
+		<th>gpu.gpu_type.name</th>
+		<th>gpu.instance_id</th>
+		<th></th>
+	</tr>
+	{% for gpu in gpus %}
+	<tr>
+		<td>{{gpu.id}}</td>
+		<td>{{gpu.host_id}}</td>
+		<td>{{gpu.gpu_type_id}}</td>
+		<td>{{gpu.gpu_type.name}}</td>
+		<td>{{gpu.instance_id}}</td>				
+		<td>
+			<form method="POST" action="./delete">
+				<input type="hidden" value="{{gpu.id}}" name="id">
+				<input type="submit" value="Delete Gpu">
+			</form>
+		</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Add GpuType</h1>
+<form method="POST" action="/admin/gputype/">
+    name: <input type="text" name="name">
+    price_minute_eur: <input type="text" name="price_minute_eur">
+    <input type="submit" value="Add GpuType">
+</form>
+
+<h1>List of GpuTypes</h1>
+<table>
+	<tr>
+		<th>gpu_type.id</th>
+		<th>gpu_type.name</th>
+		<th></th>
+		<th>gpu_type.price_minute_eur</th>
+		<th></th>
+		<th></th>
+	</tr>
+	{% for gpu_type in gpu_types %}
+	<tr>
+		<td>{{gpu_type.id}}</td>
+		<td>{{gpu_type.name}}</td>
+		<td>
+			<form method="POST" action="./update">
+				<input type="hidden" value="{{gpu_type.name}}" name="old.name">
+				<input type="text" value="{{gpu_type.name}}" name="new.name">
+				<input type="submit" value="Update name">
+			</form>
+		</td>
+		<td>{{gpu_type.price_minute_eur}}</td>
+		<td>
+			<form method="POST" action="./update">
+				<input type="hidden" value="{{gpu_type.price_minute_eur}}" name="old.price_minute_eur">
+				<input type="text" value="{{gpu_type.price_minute_eur}}" name="new.price_minute_eur">
+				<input type="submit" value="Update price_minute_eur">
+			</form>
+		</td>
+		<td>
+			<form method="POST" action="./delete">
+				<input type="hidden" value="{{gpu_type.id}}" name="id">
+				<input type="submit" value="Delete GpuType">
+			</form>
+		</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

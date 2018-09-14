@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Add Host</h1>
+<form method="POST" action="/admin/host/">
+    ip: <input type="text" name="ip">
+    memory_mb: <input type="text" name="memory_mb">        
+    user_id: <input type="text" name="user_id">
+    cpu_type_id: <input type="text" name="cpu_type_id">
+    country_type_id: <input type="text" name="country_type_id">        
+    <input type="submit" value="Add Host">
+</form>
+
+<h1>List of Hosts</h1>
+<table>
+	<tr>
+		<th>host.id</th>
+		<th>host.ip</th>
+		<th>host.memory_mb</th>
+		<th>host.user_id</th>
+		<th>host.user.email</th>
+		<th>host.cpu_type_id</th>
+		<th>host.cpu_type.name</th>
+		<th>host.country_type_id</th>
+		<th>host.country_type.name</th>
+		<th></th>
+	</tr>
+	{% for host in hosts %}
+	<tr>
+		<td>{{host.id}}</td>
+		<td>{{host.ip}}</td>
+		<td>{{host.memory_mb}}</td>
+		<td>{{host.user_id}}</td>
+		<td>{{host.user.email}}</td>
+		<td>{{host.cpu_type_id}}</td>
+		<td>{{host.cpu_type.name}}</td>
+		<td>{{host.country_type_id}}</td>
+		<td>{{host.country_type.name}}</td>
+		<td>
+			<form method="POST" action="./delete">
+				<input type="hidden" value="{{host.id}}" name="id">
+				<input type="submit" value="Delete Host">
+			</form>
+		</td>
+    </tr>
+    {% endfor %}
+{% endblock %}

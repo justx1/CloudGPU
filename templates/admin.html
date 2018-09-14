@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Admin</h1>
+<h1>List of Admin actions</h1>
+<h2>Instance</h2>
+<table>
+	<tr>
+		<td>Instance</td><td><a href="/">/</a></td>
+	</tr>
+</table>
+<h2>Metadata</h2>
+<table>
+	<tr>
+		<td>GpuType</td><td><a href="/admin/gputype/">/admin/gputype/</a></td>
+	</tr>
+	<tr>
+		<td>CpuType</td><td><a href="/admin/cputype/">/admin/cputype/</a></td>
+	</tr>
+	<tr>
+		<td>ImageType</td><td><a href="/admin/imagetype/">/admin/imagetype/</a></td>
+	</tr>
+	<tr>
+		<td>CountryType</td><td><a href="/admin/countrytype/">/admin/countrytype/</a></td>
+	</tr>
+</table>
+<h2>Objects</h2>
+<table>
+	<tr>
+		<td>User</td><td><a href="/admin/user/">/admin/user/</a></td>
+	</tr>
+	<tr>
+		<td>Host</td><td><a href="/admin/host/">/admin/host/</a></td>
+	</tr>
+	<tr>
+		<td>Gpu</td><td><a href="/admin/gpu/">/admin/gpu/</a></td>
+	</tr>
+</table>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!doctype html>
+<title>CloudGPU</title>
+<head>
+	<style>
+		table {
+		    font-family: arial, sans-serif;
+		    border-collapse: collapse;
+		    width: 100%;
+		}
+
+		td, th {
+		    border: 1px solid #aaaaaa;
+		    text-align: left;
+		    padding: 8px;
+		}
+
+		tr:nth-child(even) {
+		    background-color: #dddddd;
+		}
+
+		error {
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul class=flashes>
+			{% for message in messages %}
+				<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endwith %}
+<a href="/">/</a>&nbsp;<a href="/admin/">/admin/</a><br>
+
+{% if error %}
+	<p class=error>{{ error }}
+{% endif %}
+
+{% block body %}{% endblock %}

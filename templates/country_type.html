@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Add CountryType</h1>
+<form method="POST" action="/admin/countrytype/">
+    name: <input type="text" name="name">
+    <input type="submit" value="Add CountryType">
+</form>
+
+<h1>List of CountryTypes</h1>
+<table>
+	<tr>
+		<th>country_type.id</th>
+		<th>country_type.name</th>
+		<th></th>
+		<th></th>
+	</tr>
+	{% for country_type in country_types %}
+	<tr>
+		<td>{{country_type.id}}</td>
+		<td>{{country_type.name}}</td>
+		<td>
+			<form method="POST" action="./update">
+				<input type="hidden" value="{{country_type.name}}" name="old.name">
+				<input type="text" value="{{country_type.name}}" name="new.name">
+				<input type="submit" value="Update name">
+			</form>
+		</td>
+		<td>
+			<form method="POST" action="./delete">
+				<input type="hidden" value="{{country_type.id}}" name="id">
+				<input type="submit" value="Delete CountryType">
+			</form>
+		</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

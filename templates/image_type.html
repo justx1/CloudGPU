@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Add ImageType</h1>
+<form method="POST" action="/admin/imagetype/">
+    name: <input type="text" name="name">
+    <input type="submit" value="Add ImageType">
+</form>
+
+<h1>List of ImageTypes</h1>
+<table>
+	<tr>
+		<th>image_type.id</th>
+		<th>image_type.name</th>
+		<th></th>
+		<th></th>
+	</tr>
+	{% for image_type in image_types %}
+	<tr>
+		<td>{{image_type.id}}</td>
+		<td>{{image_type.name}}</td>
+		<td>
+			<form method="POST" action="./update">
+				<input type="hidden" value="{{image_type.name}}" name="old.name">
+				<input type="text" value="{{image_type.name}}" name="new.name">
+				<input type="submit" value="Update name">
+			</form>
+		</td>
+		<td>
+			<form method="POST" action="./delete">
+				<input type="hidden" value="{{image_type.id}}" name="id">
+				<input type="submit" value="Delete ImageType">
+			</form>
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}
