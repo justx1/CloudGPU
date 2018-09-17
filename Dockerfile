@@ -1,5 +1,5 @@
 FROM python:alpine
-COPY . /app
-WORKDIR /app
+COPY /www /www
+WORKDIR /www
 RUN pip install -r requirements.txt
-CMD ["gunicorn", "-w 2", "main:app"]
+CMD ["gunicorn", "-w 2", "cloudgpu:app"]
