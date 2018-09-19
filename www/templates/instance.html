@@ -17,6 +17,7 @@
 		<th>instance.user.email</th>
 		<th>instance.image_type_id</th>
 		<th>instance.image_type.name</th>
+		<th>instance.docker_container_id</th>		
 		<th></th>
 	</tr>
 	{% for instance in instances %}
@@ -26,6 +27,7 @@
 		<td>{{instance.user.email}}</td>
 		<td>{{instance.image_type_id}}</td>
 		<td>{{instance.image_type.name}}</td>
+		<td>{{instance.docker_container_id}}</td>		
 		<td>
 			<form method="POST" action="./delete">
 				<input type="hidden" value="{{instance.id}}" name="id">

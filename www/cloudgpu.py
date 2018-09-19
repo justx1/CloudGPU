@@ -56,6 +56,7 @@ class Instance(db.Model):
     proxy_ip = db.Column(db.String(15), nullable=False)
     gpu_count = db.Column(db.Integer, nullable=False)
     price_gpu_minute_eur = db.Column(db.Numeric(precision=8, asdecimal=True), nullable=False)
+    docker_container_id = db.Column(db.String(256), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     image_type_id = db.Column(db.Integer, db.ForeignKey('image_type.id'), nullable=False)
@@ -193,8 +194,9 @@ def set_proxy(host_id):
 def start_container(user_id, image_type_id, proxy_ip, host_id):
     try:
         print("(dummy) Starting docker container with user_id: " + str(user_id) + " image_type_id: " + str(image_type_id) + " host_id: " + str(host_id) + " proxy_ip: " + proxy_ip)
-        dockerclient = docker.from_env()
-        dockerclient.containers.run("ubuntu:latest", "echo hello world")
+        docker_client = docker.from_env()
+        docker_container = docker_client.containers.run("alpine", ["echo", "hello", "world"], detach=True)
+        print docker_container.id
     except Exception as e:
         error_message.public_value = 'Oops... something went wrong. The team has been notified.'
         raise AppError("Docker issue: unknown", e)
