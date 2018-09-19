@@ -3,6 +3,7 @@
 # Do POSTs through curl: #### curl -i -X POST -H 'Content-Type: application/json' -d '{"foo": "7", "bar": "7"}' http://localhost:5000/
 
 #### Initialize DB
+# python
 # >>> from cloudgpu import db
 # >>> db.create_all()
 # >>> exit()
@@ -86,9 +87,9 @@ class Host(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     cpu_type_id = db.Column(db.Integer, db.ForeignKey('cpu_type.id'), nullable=False)
     country_type_id = db.Column(db.Integer, db.ForeignKey('country_type.id'), nullable=False)
-    
+
     #vendor = db.relationship('Vendor', foreign_keys=vendor_id)
-    user = db.relationship('User', foreign_keys=user_id)    
+    user = db.relationship('User', foreign_keys=user_id)
     cpu_type = db.relationship('CpuType', foreign_keys=cpu_type_id)
     country_type = db.relationship('CountryType', foreign_keys=country_type_id)
 
@@ -137,8 +138,9 @@ def create_instance():
             host_id=find_available_host(gpu_request_type_id, gpu_request_count)
             book_gpu(host_id, gpu_request_type_id, gpu_request_count, instance_id=None) # Reserve GPUs
             proxy_ip=set_proxy(host_id)
-            start_container(user_id, image_type_id, proxy_ip, host_id)
-            
+            docker_container_id=start_container(user_id, image_type_id, proxy_ip, host_id)
+	    print(docker_container_id)
+
             try:
                 start_dt=datetime.utcnow()
                 instance = Instance(
@@ -148,7 +150,8 @@ def create_instance():
                     proxy_ip=proxy_ip,
                     gpu_count=gpu_request_count,
                     gpu_type_id=gpu_request_type_id,
-                    price_gpu_minute_eur=0) ### Missing code
+                    price_gpu_minute_eur=0, ### Missing code
+                    docker_container_id=docker_container_id)
                 db.session.add(instance)
                 db.session.commit()
             except Exception as e:
@@ -196,10 +199,11 @@ def start_container(user_id, image_type_id, proxy_ip, host_id):
         print("(dummy) Starting docker container with user_id: " + str(user_id) + " image_type_id: " + str(image_type_id) + " host_id: " + str(host_id) + " proxy_ip: " + proxy_ip)
         docker_client = docker.from_env()
         docker_container = docker_client.containers.run("alpine", ["echo", "hello", "world"], detach=True)
-        print docker_container.id
+	print(docker_container.id)
+	return "foo"
     except Exception as e:
         error_message.public_value = 'Oops... something went wrong. The team has been notified.'
-        raise AppError("Docker issue: unknown", e)
+        raise AppError("Docker issue: Unable to run docker container", e)
 
 @app.route("/delete", methods=["POST"])
 def delete_instance():
