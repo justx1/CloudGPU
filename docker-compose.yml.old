@@ -6,3 +6,4 @@ services:
      - "5000:5000"
     volumes:
      - '/www:/www'
+#     - /home/just/CloudGPU/www:/www
